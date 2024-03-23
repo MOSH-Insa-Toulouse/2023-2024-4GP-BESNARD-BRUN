@@ -45,6 +45,29 @@ Pour réaliser notre dispositif électronique, voici la liste des composants né
 
 
 ## Simulation électronique du capteur sous LTSpice
+Notre capteur de graphite possède une résistance variable de l'ordre du gigaohm. Le courant alors généré lorsque l'on applique une tension de 5V aux bornes du capteur est très faible (de l'ordre de la dizaine de nanoampères). Ainsi, pour récupérer et pouvoir analyser ce signal, nous devons l'amplifier. C'est pourquoi nous avons utilisé un montage transimpédance constitué d'un amplificateur opérationnel (AOP) pour fournir un signal en tension suffisant au convertisseur analogique-numérique (ADC) d'une carte Arduino UNO. Nous avons élaboré et testé ce montage sur le logiciel LTspice. Voici son schéma :
+
+![capteur_graphite](https://github.com/NieBrun/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/sch%C3%A9ma_global_ampli.png)
+(revoir l'image)
+Concernant le choix de notre AOP, celui-ci devait être capable d'accepter en entrée un très faible courant. Il doit également avoir un offset de tension très faible afin de ne pas fausser les valeurs de tension transmises à l'ADC qui seront ensuite analysées. C'est pourquoi nous avons choisi le LTC 1050.
+A ce circuit amplificateur, nous avons ajouté trois filtres pour notre signal :
+
+- à l'entrée, un filtre passe-bas passif (R1,C1) de fréquence de coupure de 16 Hz. Il permet de filtrer les bruits en courant sur le signal d'entrée
+- un autre filtre passe bas de fréquence de coupure de 1.6 Hz (R3,C2) couplé à l'AOP. Ce filtre actif permet de filtrer la composante du bruit à 50 Hz provenant du réseau électrique
+- à la sortie de l'amplificateur, un dernier filtre (R4,C4) de 1.6 kHz permet de retirer le bruit créé en cours de traitement (bruits des alimentation, de l'horloge etc...)
+
+Egalement, nous avons placé la capacité C3 de sorte à ce qu'elle filtre le bruit de l'alimentation. Aussi, la résistance R5 en entrée protège l'AOP contre les décharges électrostatiques en plus de formé avec la capacité C1 un filtre pour les bruits en tension. Enfin, la résistance R2 sera remplacé plus tard par un potentiomètre digital. Cela nous permettra de le gain de notre AOP en fonction de nos besoins.
+
+Nous avons donc testé notre circuit afin de savoir si nos filtres seraient efficients :
+
+![capteur_graphite](https://github.com/NieBrun/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/test_circuits_filtres.png)
+
+Voici la réponse de notre circuit : 
+![capteur_graphite](https://github.com/NieBrun/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/tests_circuits_filtres_reponse.png)
+
+
+![capteur_graphite](https://github.com/NieBrun/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/capteur.png)
+(pas bien compris à quoi ça sert et il faut vérifier que le signal en sortie est mesurable => retirer l'erreur des sources de tension à 0)
 
 ## Design du PCB sous KiCad
 
