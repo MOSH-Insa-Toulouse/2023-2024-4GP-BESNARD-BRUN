@@ -45,9 +45,9 @@ Pour réaliser notre dispositif électronique, voici la liste des composants né
 
 
 ## Simulation électronique du capteur sous LTSpice
-Notre capteur de graphite possède une résistance variable de l'ordre du gigaohm. Le courant alors généré lorsque l'on applique une tension de 5V aux bornes du capteur est très faible (de l'ordre de la dizaine de nanoampères). Ainsi, pour récupérer et pouvoir analyser ce signal, nous devons l'amplifier. C'est pourquoi nous avons utilisé un montage transimpédance constitué d'un amplificateur opérationnel (AOP) pour fournir un signal en tension suffisant au convertisseur analogique-numérique (ADC) d'une carte Arduino UNO. Nous avons testé ce montage sur le logiciel LTspice. Voici son schéma :
+Notre capteur de graphite possède une résistance variable de l'ordre du gigaohm. Le courant alors généré lorsque l'on applique une tension de 5V aux bornes du capteur est très faible (de l'ordre de la dizaine de nanoampères). Ainsi, pour récupérer et pouvoir analyser ce signal, nous devons l'amplifier. C'est pourquoi nous avons utilisé un montage transimpédance constitué d'un amplificateur opérationnel (AOP) pour fournir un signal en tension suffisant au convertisseur analogique-numérique (ADC) d'une carte Arduino UNO. Nous avons testé ce montage sur le logiciel LTspice basé sur [ce schéma](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/schema_suggere.png) . Voici son schéma :
 
-![capteur_graphite](https://github.com/NieBrun/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/schema_complet.png)
+![capteur_graphite](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/LTspice/Schema_complet.png)
 
 Concernant le choix de notre AOP, celui-ci devait être capable d'accepter en entrée un très faible courant. Il doit également avoir un offset de tension très faible afin de ne pas fausser les valeurs de tension transmises à l'ADC qui seront ensuite analysées. C'est pourquoi nous avons choisi le LTC 1050.
 A ce circuit amplificateur, nous avons ajouté trois filtres pour notre signal :
@@ -62,12 +62,16 @@ Nous avons donc testé notre circuit afin de savoir si nos filtres seraient effi
 
 
 Voici la réponse de notre circuit pour vérfier que le capteur soit correctement amplifié : 
-IMAGE EN TRANSIENT
+
+![Test_En_Transient](/Images/LTspice/1V-Capteur.png)
+	
 Le signal est amplifié à 1V donc l'arduino UNO pourra le mesurer.
 
 Enfin, voici la réponse lors qu'on simule un courant alternatif pour vérifier que le bruit est bien filtré.
-IMAGE EN AC
-On voit que le bruit est bien atténué, à 50Hz, il est atténue de xx dB.
+
+![Test_En_AC](/Images/LTspice/AC-Capteur.png)
+
+On voit que le bruit est bien atténué, à 50Hz, il est atténue d'environ 72 dB.
 
 
 
@@ -84,11 +88,11 @@ Suite à cela, le dispositif est par défaut dans le menu déroulant avec 4 choi
 - une mesure du flex sensor commercial et enfin 
 - une calibration du potentiomètre digital
 
-![](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Images/Menu.jpg)
+<img src="https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Menu.jpg" alt="Menu" style="width:500px;height:500px;">
 
 Le choix de menu se fait grâce aux 3 boutons : un pour descendre dans le menu, un pour monter dans le menu et un troisième pour valider le choix. Ce dernier bouton de validation sert également à sortir du menu choisi.
 
-IMAGE à rajouter
+IMAGE à changer => Image de l'écran avec les menus avec les 3 boutons visibles, à rajouter une fois PCB fait.
 
 Chaque choix du menu appel une fonction différente qui réalise sa mesure et qui est envoyé à la fonction DisplayAndTransmitter afin de l'afficher sur l'écran OLED et l'envoyer sur l'application bluetooth. Tant que le bouton central de "validation" n'est pas appuyé, on reste dans cette boucle de mesure et d'affichage.
 
@@ -101,9 +105,9 @@ Chaque choix du menu appel une fonction différente qui réalise sa mesure et qu
 
 L'application reçoit les données transmis par le module bluetooth HC-05. Elle affiche ensuite la valeur tranmis (des $M\ohm$ pour le capteur graphite ou des Ohms pour le flex sensor.
 
-![](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Images/Appli_Android.jpg)
+<img src="/Images/Appli_Android.jpg" alt="Android" style="width:500px;height:1000px;">
 
-L'application peut s'installer [sous android ici](f.lien.apk) et toutes les informations liées à l'application son dans [le dossier Application Android](dossier application android)
+L'application peut s'installer [sous android ici](www.google.fr) et toutes les informations liées à l'application son dans [le dossier Application Android](dossier application android)
 
 ## Réalisation du shield
 
