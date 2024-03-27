@@ -67,18 +67,39 @@ Voici la réponse de notre circuit pour vérfier que le capteur soit correctemen
 	
 Le signal est amplifié à 1V donc l'arduino UNO pourra le mesurer.
 
-Enfin, voici la réponse lors qu'on simule un courant alternatif pour vérifier que le bruit est bien filtré.
+Enfin, voici la réponse lorsque l'on simule un courant alternatif pour vérifier que le bruit est bien filtré.
 
 ![Test_En_AC](/Images/LTspice/AC-Capteur.png)
 
-On voit que le bruit est bien atténué, à 50Hz, il est atténue d'environ 72 dB.
+On remarque que le bruit est bien atténué, à 50Hz, il est atténue d'environ 72 dB.
 
 
 
 ## Design du PCB sous KiCad
 
+Afin de réaliser notre PCB, nous avons reproduit le circuit précédent sur Kicad 7.0. 
+Nous avons remplacé la résistance R2 par un potentiomètre numérique afin de pouvoir faire varier le gain de notre AOP. Egalement, nous avons rajouté divers composants afin de pouvoir mesurer efficacement notre capteur graphite et comparé les résultats obtenus :
+- un flexsensor servant de témoin, afin de pouvoir comparer nos mesures avec celle du capteur en graphite
+- un module bluetooth HC-05 afin de pouvoir communiquer avec notre circuit depuis notre téléphone depuis une application mobile que nous coderons nous-même. 
+- un écran OLED ainsi que trois boutons poussoirs afin de pouvoir visualiser le résultats de nos mesures et pouvoir naviguer simplement dans les différents menus permettant diverses mesures
+Tous nos composants seront installés sur un shield d'Arduino UNO. 
+
+Nous avons commencé par réaliser les symboles des différents composants et reproduire le schéma électrique complet sur Kicad. Voici le schéma électrique de l'ensemble de notre montage :
+
+![Schema_Kicad](/Images/Kicad/Schematic.png)
+
+Nous avons par la suite réalisé les empreintes de nos composants afin de les placer sur notre PCB. Notre difficulté principale a été de placer les composants de sorte qu'il n'y ait pas de via, notamment pour le GND. Voici le résultat final :
+
+![PCB_Kicad](/Images/Kicad/PCB_rooting.png)
+
+Et voici le rendu 3D que nous obtenu avec ces routages : 
+
+![3D_PCB_Kicad](/Images/Kicad/3DModel.png)
+
+Toutes les ressources utilisées pour notre Kicad (empreintes, schéma etc...) sont disponibles dans notre [dossier Kicad](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Kicad).
+
 ## Code arduino
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nous avons utilisé l'IDE Arduino 2.3.2. Nous avons utilisé les librairies SoftwareSerial pour le bluetooth et Adafruit_SSD1306 pour l'écran OLED. Sur cette dernière, elle utilise beaucoup de RAM pour les buffers, cette utilisation de RAM n'est pas affiché par l'IDE Arduino. Il se peut que le programme ne se lance pas si un attention n'a pas été porté sur cette utilisation de RAM. Pour éviter cela, on peut utiliser  la fonction ["F()"](https://www.arduino.cc/reference/en/language/variables/utilities/progmem/) ,utiliser des librairies pour l'écran OLED moins gourmande ou enfin diminuer la résolution de l'écran.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nous avons utilisé l'IDE Arduino 2.3.2. Nous avons utilisé les librairies SoftwareSerial pour le bluetooth et Adafruit_SSD1306 pour l'écran OLED. Sur cette dernière, elle utilise beaucoup de RAM pour les buffers, cette utilisation de RAM n'est pas affiché par l'IDE Arduino. Il se peut que le programme ne se lance pas si une attention n'a pas été porté sur cette utilisation de RAM. Pour éviter cela, on peut utiliser  la fonction ["F()"](https://www.arduino.cc/reference/en/language/variables/utilities/progmem/) ,utiliser des librairies pour l'écran OLED moins gourmandes ou enfin diminuer la résolution de l'écran.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dans le [dossier arduino](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Arduino) se trouve les différents fichiers pour tester les multiples éléments du dispositif. \
 Concernant le [fichier principal](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Arduino/Main/Main.ino) : lors de la mise sous tension de l'arduino, une première calibration du potentiomètre digitale est faite en fonction de la valeur mesurée sur le capteur graphite. 
@@ -110,6 +131,14 @@ L'application reçoit les données transmis par le module bluetooth HC-05. Elle 
 L'application peut s'installer [sous android ici](www.google.fr) et toutes les informations liées à l'application son dans [le dossier Application Android](dossier application android)
 
 ## Réalisation du shield
+
+Grâce à notre Kicad, nous avons pu éditer un masque de gravure de notre PCB. Nous avons envoyé notre projet Kicad à Cathy qui s'est chargée de l'imprimer. Elle a ensuite insolé aux UV une plaque d'Epoxy recouverte d'une fine couche de cuivre et d'une résine photosensible. Puis, elle a plongé la plaquette insolée dans du révélateur afin de retirer la résine non insolée, puis dans du perchlorure de fer afin de graver les pistes. Enfin, elle a nettoyé notre plaquette avec de l'acétone afin de retirer la résine restante. Merci beaucoup à Cathy qui a pris le temps de tirer notre PCB et nous expliquer le processus de fabrication!
+
+Nous avons ensuite procéder au perçage de notre plaquette afin de pouvoir installer nos différents composants selon le schéma du PCB obtenu grâce à Kicad. Une fois le perçage terminé, nous avons soudé nos composants à la plaquette.
+
+![perçage de notre PCB](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/PCB_Percage.jpg)
+
+Lors de cette étape, l'installation de nos composants a été plus compliquée que prévue. En effet, l'ensemble de nos trous étaient légèrement décalés par rapport à leur emplacement prévu. L'origine de ce problème n'a pas été clairement établie.
 
 ## Banc de test
 
