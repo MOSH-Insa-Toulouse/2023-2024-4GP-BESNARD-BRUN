@@ -31,7 +31,7 @@ const float flatResistance = 30000.0; // resistance when flat
 const float bendResistance = 1000.0;  // resistance at 90 deg
 
 //BOUTONS
-const int buttonPin[] = {6,5,4};  // Pin connected to button
+const int buttonPin[] = {4,5,6};  // Pin connected to button
 // Variables will change:
 bool buttonState[3]= {LOW,LOW,LOW};            // the current reading from the input pin
 bool lastButtonState[3] = {LOW,LOW,LOW};  // the previous reading from the input pin
@@ -183,12 +183,12 @@ void ChoixMenu(){
       if(OK_TEL==1)
       {
         OK_TEL=0;
-        Calibration();
+        PotPos=Calibration();
       }
       if(OK==1)
       {
         OK=0;
-        Calibration();
+        PotPos=Calibration();
       }    
     }
   }
@@ -410,7 +410,7 @@ void DisplayAndTransmitter(float VALUE, int choix){
   ecranOLED.setTextSize(1);                   // Taille des caractères (1:1, puis 2:1, puis 3:1)
   ecranOLED.setCursor(0, 0);
   ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);   // Couleur du texte, et couleur du fond
-  if(choix==1){ecranOLED.println(F("Mesure instantannee :"));}
+  if(choix==1){ecranOLED.println(F("Mesure instantanee :"));}
   else if(choix==2){ecranOLED.println(F("Mesure moyennee :"));}
   else if(choix==3){ecranOLED.println(F("Mesure Flex Sensor :"));}
   else if(choix==4){ecranOLED.println(F("Calibration en cours"));}

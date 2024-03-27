@@ -67,8 +67,7 @@ void setup() {
 
 void loop() {
 
-  // setPotWiper(pot0,int(10));
-  //setPotWiper(pot0,127);
+  setPotWiper(pot0,int(7));
   Vadc = analogRead(capteurgraphitePin)*5.0/1024.0;
   Res=R1*(1+R3/R2)*Vcc/Vadc-R1-R5;
   Serial.println(Vadc);
