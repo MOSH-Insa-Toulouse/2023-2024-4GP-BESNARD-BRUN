@@ -55,7 +55,7 @@ bool OK_TEL=0; // Si un bouton sur téléphone a été cliqué.
 #include <SPI.h>
 const byte csPin           = 10;      // MCP42100 chip select pin
 const int  maxPositions    = 256;     // wiper can move from 0 to 255 = 256 Positions
-const long rAB             = 47500;   // 50k pot resistance between terminals A and B, mais pour ajuster au multimètre, je mets 47500
+const long rAB             = 52200;   // 50k pot resistance between terminals A and B, mais pour ajuster au multimètre, je mets 47500
 const byte rWiper          = 125;     // 125 ohms pot wiper resistance
 const byte pot0            = 0x11;    // pot0 addr // B 0001 0001
 const byte pot0Shutdown    = 0x21;    // pot0 shutdown // B 0010 0001
@@ -90,6 +90,8 @@ void setup() {
   digitalWrite(csPin, HIGH);        // chip select default to de-selected
   SPI.begin();
   PotPos=Calibration();             // Calibration du potentiomètre en fonction du capteur
+  // setPotWiper(pot0,int(5));
+  // R2=1144;
   }
   
 void loop() {
@@ -111,6 +113,7 @@ void ChoixMenu(){
     ecranOLED.setTextSize(1);                           // Taille du texte
     ecranOLED.setCursor(0, 0);                          // Placement du texte
     ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);   // Couleur du texte, et couleur du fond
+    //setPotWiper(pot0,7);
     CheckBoutons();   // Fonction primordiale : vérifie si les boutons physiques ne sont pas appuyé et ajuste la variable position, OK et OK_TEL (si un bouton sur tél n'est pas cliqué)
     if(Position==1)                       // Si nous sommes en position 1, affiche le texte correspondant (effet de surbrillance)
     {
@@ -294,6 +297,8 @@ void MesureINST()
       previousMillis = currentMillis;
       Vadc = analogRead(capteurgraphitePin)*5.0/1024.0; // Valeur lu en voltage sortant du capteur
       Res=(R1*(1+R3/R2)*Vcc/Vadc-R1-R5)*calibre; // Calcul de la résistance
+      // Serial.print("  ");
+      // Serial.println(Vadc*1024/5);
       DisplayAndTransmitter(Res,1); // Transmet la donnée à afficher à l'ordi, à l'écran et au bluetooth
       CheckBoutons();
       }
@@ -335,12 +340,14 @@ void MesureMoyenne(){
   { 
     float moyenne=0;  
     for (int i = 0; i < 50; i++) {
-      moyenne=moyenne+(analogRead(capteurgraphitePin)*5/1024); 
+      moyenne=moyenne+analogRead(capteurgraphitePin); 
       CheckBoutons();
       delay(50);
     }
-    moyenne=moyenne/50; // Fais la moyenne sur les 50 mesures
+    moyenne=moyenne*5/(50*1024); // Fais la moyenne sur les 50 mesures
     Res=(R1*(1+R3/R2)*Vcc/moyenne-R1-R5)*calibre; // Calcul de la résistance à partir de la valeur lue moyenne, possible de faire la moyenne des résistance calculées
+    Res=(R1*(1+R3/R2)*Vcc/Vadc-R1-R5)*calibre; // Calcul de la résistance
+
     //Serial.print(F("Mesure moyennee :"));
     //Serial.println(Res);
     DisplayAndTransmitter(Res,2); // Transmet la donnée à afficher à l'ordi, à l'écran et au bluetooth
@@ -402,6 +409,7 @@ void FlexSensor(){
   ecranOLED.display();
   delay(1000);
 }
+
 // Transmet la donnée à afficher à l'ordi, à l'écran et au bluetooth
 void DisplayAndTransmitter(float VALUE, int choix){
   char ResASCII[10];
@@ -433,8 +441,8 @@ int Calibration(){
   ecranOLED.println(F("Calibration en cours"));
   ecranOLED.display();    
   delay(2000);   
-  int Vadc=analogRead(capteurgraphitePin);
-  int tolerance=20; //Tolerance : 512+-20
+  int Vadc=0;
+  int tolerance=40; //Tolerance : 512+-20
   int V_Cible = 512;
   int a = 0;
   int b = 255;
