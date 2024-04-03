@@ -109,11 +109,9 @@ Suite à cela, le dispositif est par défaut dans le menu déroulant avec 4 choi
 - une mesure du flex sensor commercial et enfin 
 - une calibration du potentiomètre digital
 
-<img src="https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Menu.jpg" alt="Menu" style="width:500px;height:500px;">
+<img src="https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Menu.png" alt="Menu" style="width:500px;height:500px;">
 
 Le choix de menu se fait grâce aux 3 boutons : un pour descendre dans le menu, un pour monter dans le menu et un troisième pour valider le choix. Ce dernier bouton de validation sert également à sortir du menu choisi.
-
-IMAGE à changer => Image de l'écran avec les menus avec les 3 boutons visibles, à rajouter une fois PCB fait.
 
 Chaque choix du menu appel une fonction différente qui réalise sa mesure et qui est envoyé à la fonction DisplayAndTransmitter afin de l'afficher sur l'écran OLED et l'envoyer sur l'application bluetooth. Tant que le bouton central de "validation" n'est pas appuyé, on reste dans cette boucle de mesure et d'affichage.
 
@@ -128,7 +126,7 @@ L'application reçoit les données transmis par le module bluetooth HC-05. Elle 
 
 <img src="/Images/Appli_Android.jpg" alt="Android" style="width:500px;height:1000px;">
 
-L'application peut s'installer [sous android ici](www.google.fr) et toutes les informations liées à l'application son dans [le dossier Application Android](dossier application android)
+L'application peut s'installer [sous android ici](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Android/CapteurGraphite.apk) et toutes les informations liées à l'application son dans [le dossier Application Android](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Android)
 
 ## Réalisation du shield
 
@@ -138,10 +136,41 @@ Nous avons ensuite procéder au perçage de notre plaquette afin de pouvoir inst
 
 ![perçage de notre PCB](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/PCB_Percage.jpg)
 
+![soudage de notre PCB](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/PCB_Soudage.jpg)
+
+
 Lors de cette étape, l'installation de nos composants a été plus compliquée que prévue. En effet, l'ensemble de nos trous étaient légèrement décalés par rapport à leur emplacement prévu. L'origine de ce problème n'a pas été clairement établie.
+
+![PCB final](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/PCB_Final.jpg)
+
 
 ## Banc de test
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pour spécifier notre capteur et son montage transimpédance, nous avons décidé d'utiliser des demis-cercles avec un rayon différents.
+
+![Image Banc de Test](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Banc_de_test-Pyramide.png)
+
+Ce sont des demis-cercles, imprimés en 3D, avec un diamètre commençant à 2 cm pour le plus petit et en augmentant de 0.5 cm par créneau. Le plus grand demi-cercle a un diamètre de 5cm. Grâce à ces demis-cercles, nous allons pouvoir calculer la variation de la résistance électrique $\frac{\Delta *R}{R_0}$ en fonction de la déformation $\epsilon=\frac{e}{D}$. Nous avons ici mesuré notre épaisseur de notre papier $e=0.2 mm$. Ainsi, nous avons une déformation variant de 0.1 pour le plus petit diamètre à 0.04 pour le plus grand. Voici les courbes caractéristiques pour des crayons 2B, B et HB pour [des tensions ou des compressions.](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/Images/Compression-Tension.png)
+
+![Compression](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Compression.png)
+
+![Tension](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Tension.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On a donc une résistance qui augmente en tension et une résistance qui diminue en compression. En tension, la distance entre les atomes de carbones augmente et la résistance augmente avec, le contraire se produit pour la compression.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En fonction de la dureté du crayon utilisé, les variations relatives de résistance changent. Plus le crayon est gras (2H->H->HB->B->2B avec 2B avec le plus de carbone), moins sa variation relative de résistance est élevée.
+
+De plus, contrairement, à l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" (Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang), nous avons pu mesurer la résistance avec un crayon 2H.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Néanmoins, toutes ces mesures sont à prendre avec du recul au vu des conditions non reproductible d'essais. En effet, la quantité de graphite déposé au crayon à papier est très variable, induisant ainsi une résistance très variable. Il serait intéressant de développer une méthode afin de déposer une quantité fixe et reproductible de graphite. Le potentiomètre digital qui permet de régler le gain du montage transimpédance mais il semble que les valeurs lues à l'arduino A1 soient incohérentes, il faudrait approfondir la recherche (capacité qui nuisent ?).
+
+
 ## Datasheet
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vous pouvez retrouver la datasheet du produit [ici](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/tree/main/datasheet.pdf)
+
+
 ## Contact
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vous pouvez nous contacter pour toutes questions :
+- Niels Brun : niels.brun@insa-toulouse.fr
+- Paul Besnard : paul.besnard@insa-toulouse.fr

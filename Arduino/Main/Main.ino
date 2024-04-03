@@ -26,7 +26,7 @@ const long interval = 500;           // interval at which to blink (milliseconds
 // MESURE FLEX SENSOR
 const int flexPin = A0;      // Pin connected to voltage divider output
 const float VCC = 5;      // voltage at Ardunio 5V line
-const float R_DIV = 10000.0;  // resistor used to create a voltage divider
+const float R_DIV = 47000.0;  // resistor used to create a voltage divider
 const float flatResistance = 30000.0; // resistance when flat
 const float bendResistance = 1000.0;  // resistance at 90 deg
 
@@ -384,7 +384,7 @@ void FlexSensor(){
   {  
     // Read the ADC, and calculate voltage and resistance from it
     ADCflex = analogRead(flexPin);
-    Vflex = ADCflex * VCC / 1023.0;
+    Vflex = ADCflex * VCC / 1024.0;
     Rflex = R_DIV * (VCC / Vflex - 1.0); // Calcul de la résistance du flex
     // Use the calculated resistance to estimate the sensor's bend angle:
     // float angle = map(Rflex, flatResistance, bendResistance, 0, 90.0);
@@ -420,7 +420,7 @@ void DisplayAndTransmitter(float VALUE, int choix){
   ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);   // Couleur du texte, et couleur du fond
   if(choix==1){ecranOLED.println(F("Mesure instantanee :"));}
   else if(choix==2){ecranOLED.println(F("Mesure moyennee :"));}
-  else if(choix==3){ecranOLED.println(F("Mesure Flex Sensor :"));}
+  else if(choix==3){ecranOLED.println(F("Mesure Flex Sensor :"));dtostrf(VALUE, 5, 0, ResASCII);}
   else if(choix==4){ecranOLED.println(F("Calibration en cours"));}
   ecranOLED.setTextSize(3);                   // Ecris en gros
   ecranOLED.setCursor(0, 30); // Ecris à gauche de l'écran
