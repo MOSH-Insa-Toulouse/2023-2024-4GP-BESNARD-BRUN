@@ -18,7 +18,7 @@
 *** 
 
 ## Contexte
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dans le cadre de l'UF "Du capteur au banc de test" se déroulant en 4ème année de Génie Physique de l’INSA Toulouse, nous avons développé un dispositif permettant de mesurer la contrainte. Le capteur du dispositif est basé sur l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" (Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang). Il est simplement composé d'un bout de papier avec du crayon à papier. En déformant le papier, le nombre de particules de graphite composant le crayon à papier déposé sur le papier, reliées varie en fonction du type de déformation. Ce système granulaire subit une modification de résistance et de conductance. Grâce à cela, on  pourra remonter à la déformation tel une jauge de contrainte traditionnel. \
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dans le cadre de l'UF "Du capteur au banc de test" se déroulant en 4ème année de Génie Physique de l’INSA Toulouse, nous avons développé un dispositif permettant de mesurer la contrainte. Le capteur du dispositif est basé sur l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" (Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang). Il est simplement composé d'un bout de papier avec du graphite que l'on vient déposer à l'aide d'un crayon à papier. En déformant le papier, le nombre de particules de graphite reliées, composant le crayon à papier déposé sur le papier, varie en fonction du type de déformation. Ce système granulaire subit une modification de résistance et de conductance. Grâce à cela, on  pourra remonter à la déformation tel une jauge de contrainte traditionnel. \
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L'objectif est donc de pouvoir réaliser un dispositif permettant la mesure de déformation à partir d'un capteur low-tech. En passant par différentes étapes : simulations électroniques, design du PCB, code arduino et réalisation de datasheet.
 
 ## Livrables
@@ -33,7 +33,7 @@
 ## Matériel nécessaire
 Pour réaliser notre dispositif électronique, voici la liste des composants nécessaires :
 
-- Résistances : 1 de 1 $k\ohm$, 1 de $10k\ohm$, 2 de $100k\ohm$ pour l'amplificateur transimpédance. 3 de $10k\ohm$ pour les boutons (peuvent être éviter en utilisant les résistances internes de l'arduino). 1 de $47k\ohm$ pour le flex sensor.
+- Résistances : 1 de 1 $k\ohm$, 1 de $10k\ohm$, 2 de $100k\ohm$ pour l'amplificateur transimpédance. 3 de $10k\ohm$ pour les boutons (peuvent être éviter en utilisant les résistances internes de l'arduino) et 1 de $47k\ohm$ pour le flex sensor.
 - Capacités : 3 de 100 nF, 1 de 1 uF
 - Arduino Uno
 - Amplificateur opérationnel LTC1050
@@ -83,7 +83,8 @@ Nous avons remplacé la résistance R2 par un potentiomètre numérique afin de 
 - un flexsensor servant de témoin, afin de pouvoir comparer nos mesures avec celle du capteur en graphite
 - un module bluetooth HC-05 afin de pouvoir communiquer avec notre circuit depuis notre téléphone depuis une application mobile que nous coderons nous-même. 
 - un écran OLED ainsi que trois boutons poussoirs afin de pouvoir visualiser le résultats de nos mesures et pouvoir naviguer simplement dans les différents menus permettant diverses mesures
-Tous nos composants seront installés sur un shield d'Arduino UNO. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tous nos composants seront installés sur un shield d'Arduino UNO. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nous avons commencé par réaliser les symboles des différents composants et reproduire le schéma électrique complet sur Kicad. Voici le schéma électrique de l'ensemble de notre montage :
 
@@ -157,12 +158,12 @@ Suite à cela, le dispositif est par défaut dans le menu déroulant avec 4 choi
 
 ![Tension](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Tension.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On a donc une résistance qui augmente en tension et une résistance qui diminue en compression. En tension, la distance entre les atomes de carbones augmente et la résistance augmente avec, le contraire se produit pour la compression. \
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On remarque que la résistance augmente lorsque l'on met le capteur en tension et qu'elle diminue lors de la compression de ce dernier. En tension, la distance entre les atomes de carbones augmente et la résistance augmente avec. Le contraire se produit pour la compression. \
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En fonction de la dureté du crayon utilisé, les variations relatives de résistance changent. Plus le crayon est gras (2H->H->HB->B->2B avec 2B avec le plus de carbone), moins sa variation relative de résistance est élevée.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;De plus, contrairement, à l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" (Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang), nous avons pu mesurer la résistance avec un crayon 2H.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Néanmoins, toutes ces mesures sont à prendre avec du recul au vu des conditions non reproductible d'essais. En effet, la quantité de graphite déposé au crayon à papier est très variable, induisant ainsi une résistance très variable. Il serait intéressant de développer une méthode afin de déposer une quantité fixe et reproductible de graphite. Le potentiomètre digital qui permet de régler le gain du montage transimpédance mais il semble que les valeurs lues à l'arduino A1 soient incohérentes, il faudrait approfondir la recherche (capacité qui nuisent ?).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Néanmoins, toutes ces mesures sont à prendre avec du recul au vu des conditions non reproductibles d'essai. En effet, la quantité de graphite déposée au crayon à papier est très variable, induisant ainsi une résistance très variable. Il serait intéressant de développer une méthode afin de déposer une quantité fixe et reproductible de graphite. Egalement, le potentiomètre digital, qui permet de régler le gain du montage transimpédance, semble renvoyer des valeurs incohérentes lorsqu'elles sont lues à l'arduino A1. Il faudrait approfondir la recherche. Nous avons émis l'hypothèse que cela soit les capacités qui nuisent à la mesure, sans plus de recherche.
 
 
 ## Datasheet
