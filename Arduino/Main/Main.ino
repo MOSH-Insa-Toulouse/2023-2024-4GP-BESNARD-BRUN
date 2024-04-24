@@ -89,6 +89,7 @@ void setup() {
   pinMode(buttonPin[2], INPUT);
   digitalWrite(csPin, HIGH);        // chip select default to de-selected
   SPI.begin();
+  delay(5000);
   PotPos=Calibration();             // Calibration du potentiomètre en fonction du capteur
   // setPotWiper(pot0,int(5));
   // R2=1144;
@@ -297,8 +298,8 @@ void MesureINST()
       previousMillis = currentMillis;
       Vadc = analogRead(capteurgraphitePin)*5.0/1024.0; // Valeur lu en voltage sortant du capteur
       Res=(R1*(1+R3/R2)*Vcc/Vadc-R1-R5)*calibre; // Calcul de la résistance
-      // Serial.print("  ");
-      // Serial.println(Vadc*1024/5);
+      Serial.print("Vadc = ");
+      Serial.println(Vadc*1024/5);
       DisplayAndTransmitter(Res,1); // Transmet la donnée à afficher à l'ordi, à l'écran et au bluetooth
       CheckBoutons();
       }
@@ -456,7 +457,7 @@ int Calibration(){
     for(int i=0;i<3;i++)
     {
       Vadc += analogRead(capteurgraphitePin);
-      delay(100);
+      delay(200);
     }
     Vadc = int(Vadc/3);
     Serial.print(F("Position Pota :"));

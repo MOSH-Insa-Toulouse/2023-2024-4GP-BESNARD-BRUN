@@ -158,13 +158,18 @@ Suite à cela, le dispositif est par défaut dans le menu déroulant avec 4 choi
 
 ![Tension](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Tension.png)
 
+![Tension](https://github.com/MOSH-Insa-Toulouse/2023-2024-4GP-BESNARD-BRUN/blob/main/Images/Flex.png)
+
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On remarque que la résistance augmente lorsque l'on met le capteur en tension et qu'elle diminue lors de la compression de ce dernier. En tension, la distance entre les atomes de carbones augmente et la résistance augmente avec. Le contraire se produit pour la compression. \
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En fonction de la dureté du crayon utilisé, les variations relatives de résistance changent. Plus le crayon est gras (2H->H->HB->B->2B avec 2B avec le plus de carbone), moins sa variation relative de résistance est élevée.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;De plus, contrairement, à l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" (Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang), nous avons pu mesurer la résistance avec un crayon 2H.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Néanmoins, toutes ces mesures sont à prendre avec du recul au vu des conditions non reproductibles d'essai. En effet, la quantité de graphite déposée au crayon à papier est très variable, induisant ainsi une résistance très variable. Il serait intéressant de développer une méthode afin de déposer une quantité fixe et reproductible de graphite. Egalement, le potentiomètre digital, qui permet de régler le gain du montage transimpédance, semble renvoyer des valeurs incohérentes lorsqu'elles sont lues à l'arduino A1. Il faudrait approfondir la recherche. Nous avons émis l'hypothèse que cela soit les capacités qui nuisent à la mesure, sans plus de recherche.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enfin, on peut comparer notre capteur avec un flex sensor commercial. Il semblerait que le flex sensor soit plus sensible à la déformation, en plus d'être plus solide pour des déformations importantes. Pour notre capteur, il a un nombre d'utilisation très limité, qui diminue très fortement pour une déformation élevée.
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Néanmoins, toutes ces mesures sont à prendre avec du recul au vu des conditions non reproductibles d'essai. En effet, la quantité de graphite déposée au crayon à papier est très variable, induisant ainsi une résistance très variable. Il serait intéressant de développer une méthode afin de déposer une quantité fixe et reproductible de graphite.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Egalement, nous conseillerons de changer de banc de test et d'utiliser un servo-moteur qui permet de créer des conditions plus reproductibles, que ce soit pour le carbone qui n'est pas déposé sur le banc de test mais également par l'angle imposé qui est précisement connu. Autrement, il faudrait reproduire des cercles de diamètres connues mais avec des déformations moins importantes afin de moins endommager le capteur.
 
 ## Datasheet
 

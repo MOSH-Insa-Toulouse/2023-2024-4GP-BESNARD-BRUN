@@ -74,11 +74,14 @@ void loop() {
   Serial.println("Pot 0 Control ");
   for (int i = 0; i < 256; i++) {
     setPotWiper(pot0, i);
+    delay(500);
+    Serial.println(analogRead(1));
     delay(1000);
   }
   // move pot0 wiper from max to min in decrements of 1 position
   for (int i = 256; i > 0; i--) {
     setPotWiper(pot0, i);
+    Serial.println(analogRead(1));
     delay(1000);
   }
 }
